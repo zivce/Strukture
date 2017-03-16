@@ -75,6 +75,73 @@ void CPolynomLL::addToList(int exp, double coef)
 }
 
 
+void CPolynomLL::addToTMPList(int exp, double coef)
+{
+	
+
+	Node* tmp = new Node(exp, coef);
+
+	if (head == tail && head != nullptr)
+	{
+		//ako imamo jedan element
+		//i ako se uklapa u sort
+		if (head->getExp() < exp) {
+
+			this->addToTail(tmp);
+
+		}
+		else
+		{
+
+			this->addToHead(tmp);
+
+		}
+		return;
+	}
+
+
+	if (head == nullptr)
+	{
+		head = tail = tmp;
+		return;
+	}
+	else
+	{
+		Node* tmp1 = new Node();//naredni pokazivac
+		Node* tmp0 = nullptr;//prethodni pokazivac
+
+		tmp1 = head;
+		bool p = false;
+		while (tmp1 != nullptr)//jedan elem u listi
+		{
+			if (tmp1->getExp() == exp)
+				return;
+
+			if (tmp1->getExp() < exp) {
+				tmp0 = tmp1;
+			}
+			else {
+				p = true;
+			}
+			if (p) {
+
+				break;//prvi veci element kraj!
+
+			}
+			tmp1 = tmp1->getNext();
+		}
+
+
+		tmp->setNext(tmp1);
+		tmp0->setNext(tmp);
+
+		if (tail->getNext() != nullptr)
+			tail = tail->getNext();
+
+	}
+
+
+}
 void CPolynomLL::addToHead(Node* A) 
 {
 	if (head == nullptr && head == tail)
@@ -144,7 +211,7 @@ CPolynomLL* CPolynomLL::addPol(CPolynomLL& A) {
 		int defaultr = 1;
 
 		while (tmpA != nullptr) {
-			TMP->addToList(tmpA->getExp(), defaultr);
+			TMP->addToTMPList(tmpA->getExp(), 0);
 			tmpA = tmpA->getNext();
 		}
 		
@@ -154,7 +221,7 @@ CPolynomLL* CPolynomLL::addPol(CPolynomLL& A) {
 
 			//proveri dal vec nije dodat!
 
-				TMP->addToList(tmpA->getExp(), defaultr);
+				TMP->addToTMPList(tmpA->getExp(), 0);
 
 			tmpA = tmpA->getNext();
 
@@ -252,9 +319,8 @@ void CPolynomLL::printPolynom() {
 	while (tmp != nullptr)
 	{	
 
-		cout << "exp " << ++i << ": " << tmp->getExp() << endl;
-		cout << "Koef: " << tmp->getKoef() << endl;
-		tmp = tmp->ge
+		cout << tmp->getKoef() << "x^" << tmp->getExp() << " " ;
+		tmp = tmp->getNext();
 
 
 	}

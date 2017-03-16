@@ -19,6 +19,8 @@ public:
 	void addToHead(Node* A);
 	void addToList(int exp, double coef);
 
+	void addToTMPList(int exp, double coef);
+
 	CPolynomLL* addPol(CPolynomLL& B);
 
 	void printPolynom();
