@@ -73,7 +73,79 @@ void CPolynomLL::addToList(int exp, double coef)
 
 
 }
+void CPolynomLL::addToMulList(int exp, double coef)
+{
+	if (coef == 0)
+	{
+		return;
+		//preskoci
+	}
 
+	Node* tmp = new Node(exp, coef);
+
+	if (head == tail && head != nullptr)
+	{
+		//ako imamo jedan element
+		//i ako se uklapa u sort
+		if (head->getExp() < exp) {
+
+			this->addToTail(tmp);
+
+		}
+		else
+		{
+
+			this->addToHead(tmp);
+
+		}
+		return;
+	}
+
+
+	if (head == nullptr)
+	{
+		head = tail = tmp;
+		return;
+	}
+	else
+	{
+		Node* tmp1 = new Node();//naredni pokazivac
+		Node* tmp0 = nullptr;//prethodni pokazivac
+
+		tmp1 = head;
+		bool p = false;
+		while (tmp1 != nullptr)//jedan elem u listi
+		{
+			if (tmp1->getExp() == exp){
+				tmp1->addToKoef(exp);
+				return;
+			}
+
+			if (tmp1->getExp() < exp) {
+				tmp0 = tmp1;
+			}
+			else {
+				p = true;
+			}
+			if (p) {
+
+				break;//prvi veci element kraj!
+
+			}
+			tmp1 = tmp1->getNext();
+		}
+
+
+		tmp->setNext(tmp1);
+		tmp0->setNext(tmp);
+
+		if (tail->getNext() != nullptr)
+			tail = tail->getNext();
+
+	}
+
+
+}
 
 void CPolynomLL::addToTMPList(int exp, double coef)
 {
@@ -208,7 +280,6 @@ CPolynomLL* CPolynomLL::addPol(CPolynomLL& A) {
 		
 		Node* tmpA = A.head;
 		
-		int defaultr = 1;
 
 		while (tmpA != nullptr) {
 			TMP->addToTMPList(tmpA->getExp(), 0);
@@ -313,6 +384,7 @@ CPolynomLL* CPolynomLL::addPol(CPolynomLL& A) {
 }
 
 CPolynomLL* CPolynomLL::mulPol(CPolynomLL& A, CPolynomLL& B) {
+	
 	Node* tmp0 = A.head;
 	Node* tmp1 = B.head;
 
@@ -320,23 +392,24 @@ CPolynomLL* CPolynomLL::mulPol(CPolynomLL& A, CPolynomLL& B) {
 	{
 		while (tmp1 != nullptr)
 		{
-			double noviExp = tmp0->getExp() + tmp1->getExp;
+			double noviExp = tmp0->getExp() + tmp1->getExp();
 			
-			double noviKoef = tmp0->getKoef() * tmp0->getKoef();
+			double noviKoef = tmp0->getKoef() * tmp1->getKoef();
 			
-			this->addToList(noviExp,noviKoef);
+			
+			this->addToMulList(noviExp,noviKoef);
 
 			tmp1 = tmp1->getNext();
 
 		}//end B loop
 
-
+		tmp1 = B.head;
 		tmp0 = tmp0->getNext();
 	}//end A loop
 
 
 
-
+	return this;
 }
 
 

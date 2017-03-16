@@ -29,7 +29,12 @@ void main() {
 	CPolynomLL* Res = P->addPol(*T);
 
 	Res->printPolynom();
+	cout << "\n________\n";
 
+	CPolynomLL* MULTI = new CPolynomLL();
 
+	MULTI = MULTI->mulPol(*T, *P);
+
+	MULTI->printPolynom();
 
 }

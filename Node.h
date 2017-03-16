@@ -6,6 +6,11 @@ class Node {
 	double koef;
 	Node* next;
 public:
+	void addToKoef(double A) 
+	{
+		koef += A;
+	}
+
 	double getKoef() {
 		return koef;
 	}
