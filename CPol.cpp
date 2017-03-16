@@ -312,6 +312,34 @@ CPolynomLL* CPolynomLL::addPol(CPolynomLL& A) {
 	return TMP;
 }
 
+CPolynomLL* CPolynomLL::mulPol(CPolynomLL& A, CPolynomLL& B) {
+	Node* tmp0 = A.head;
+	Node* tmp1 = B.head;
+
+	while (tmp0 != nullptr)
+	{
+		while (tmp1 != nullptr)
+		{
+			double noviExp = tmp0->getExp() + tmp1->getExp;
+			
+			double noviKoef = tmp0->getKoef() * tmp0->getKoef();
+			
+			this->addToList(noviExp,noviKoef);
+
+			tmp1 = tmp1->getNext();
+
+		}//end B loop
+
+
+		tmp0 = tmp0->getNext();
+	}//end A loop
+
+
+
+
+}
+
+
 
 void CPolynomLL::printPolynom() {
 	Node* tmp = this->head;

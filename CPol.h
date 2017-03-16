@@ -23,6 +23,8 @@ public:
 
 	CPolynomLL* addPol(CPolynomLL& B);
 
+	CPolynomLL* mulPol(CPolynomLL& A,CPolynomLL& B);
+
+
 	void printPolynom();
-	void copyList(CPolynomLL* T);
 };
