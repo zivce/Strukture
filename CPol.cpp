@@ -117,7 +117,7 @@ void CPolynomLL::addToMulList(int exp, double coef)
 		while (tmp1 != nullptr)//jedan elem u listi
 		{
 			if (tmp1->getExp() == exp){
-				tmp1->addToKoef(exp);
+				tmp1->addToKoef(coef);
 				return;
 			}
 

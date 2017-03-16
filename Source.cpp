@@ -33,8 +33,18 @@ void main() {
 
 	CPolynomLL* MULTI = new CPolynomLL();
 
+	T->printPolynom();
+	
+	cout << "\n________\n";
+	
+	P->printPolynom();
+
+	cout << "\n________\n";
+
 	MULTI = MULTI->mulPol(*T, *P);
 
 	MULTI->printPolynom();
+
+	cout << "\n________\n";
 
 }
