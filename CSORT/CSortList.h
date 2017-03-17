@@ -21,15 +21,6 @@ public:
 	}
 
 
-	void xchangeInfo(Node<T>* a, Node<T>* b)
-	{
-		//ako su susedi
-		T infoTmp = T();
-		infoTmp = a->info;
-		a->info = b->info;
-		b->info = infoTmp;
-
-	}
 
 	CSortList() {
 		head = tail = nullptr;
@@ -74,11 +65,7 @@ void CSortList<T>::swap(Node<T>* previousA, Node<T>* a, Node<T>* previousB, Node
 	if (a == b)
 		return;
 
-	if (a->link == b || b->link == a)
-	{
-		this->xchangeInfo(a, b);
-		return;
-	}
+	
 	
 	if (previousA == nullptr)
 	{

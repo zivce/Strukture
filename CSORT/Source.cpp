@@ -22,12 +22,12 @@ void main() {
 
 		cout << *A << "\n";
 
-		A->swap(nullptr,TMP0, TailPrev,TMP1);
+		A->swap(nullptr,TMP0, TMP0,TMP1);
 
 		cout << *A;
 
 	
-		A->bubbleSort();
+	//	A->bubbleSort();
 
 
 	}
