@@ -20,15 +20,24 @@ void main() {
 		
 		Node<int>* TailPrev = A->getHead();
 
-		cout << *A << "\n";
 
 		A->swap(nullptr,TMP0, TMP0,TMP1);
 
-		cout << *A;
 
-	
-	//	A->bubbleSort();
+		A->addToHead(8);
+		A->addToHead(10);
+		A->addToHead(114);
 
+
+		cout << *A << "\n";;
+
+
+		A->bubbleSort();
+
+		cout << *A << "\n";
+
+
+		
 
 	}
 	catch (char* p)

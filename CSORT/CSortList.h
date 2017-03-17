@@ -101,78 +101,118 @@ void CSortList<T>::swap(Node<T>* previousA, Node<T>* a, Node<T>* previousB, Node
 
 template <class T>
 void CSortList<T>::bubbleSort() {
-	Node<T>* tmp1 = this->tail;
-	
-	Node<T>* tmp0 = head;
-	Node<T>* tmpHd = head->getLink();
+	Node<T>* tmp1 = tail;
 
-	while(tmp0 != nullptr)
+
+	/*|||            |||
+	vvv outer   loop vvv */
+
+	while(tmp1 != head)
 	{
 
-		while (tmpHd != tmp1)
+		Node<T>* tmpPeak = head;
+		Node<T>* tmpPeakPrevious = nullptr;
+		/*|||            |||
+		  vvv inner loop vvv */
+
+
+		while (tmpPeak->link != tmp1)
+			/*
+			*
+			* PEAK DODJE NA PRETPOSLEDNJE MESTO
+			* TAD IZADJE IZ PETLJE I ODRADI JOS
+			* JEDNU ZAMENU!
+			* 
+			* IDE DOK NE DODJE DO PRETPOSLEDNJEG U
+			* LISTI TAD IZADJE U OUTER PETLJU
+			*/
 		{
-			//unutrasnja petlja
-
-
-
-		}
-
-	}
-
-}
-
-
-template <class T>
-void CSortList<T>::sortList(bool arg)
-{
-	T** arr;
-	int n = 0;
-	Node<T>* TMP = this->head;
-
-	while (TMP != nullptr)
-	{
-		n++;
-		TMP = TMP->getLink();
-	}
-
-	arr = new T*[n];
-	for (int i = 0; i < n; i++)
-		arr[i] = new T();
-
-
-	TMP = this->head;
-	int i = 0;
-	while (TMP != nullptr) {
-
-		arr[i] = new T(TMP->getInfo());
-
-		i++;
-		TMP = TMP->getLink();
-	}
-
-
-	if (arg)
-		//arg == true rastuci
-	{
-		for (int i = 0; i < n; i++){
-			for (int j = n - 1; j > i; j--)
+			if (tmpPeak->info > tmpPeak->link->info)
 			{
-				T* tmp = nullptr;
-				if(*arr[j] < *arr[j-1])
+				this->swap(tmpPeakPrevious, tmpPeak, tmpPeak, tmpPeak->link);
+
+				if (tmpPeakPrevious == nullptr)
 				{
-					tmp = arr[j];
-					arr[j] = arr[j-1];
-					arr[j-1] = tmp;
-
+					tmpPeakPrevious = head;
 				}
+				else
+				{
+					tmpPeakPrevious = tmpPeakPrevious->link;
+				}
+			}
+			else
+			{
+				tmpPeakPrevious = tmpPeak;
 
-			}//end_for_j
+				tmpPeak = tmpPeak->link;
+			}
+		}
+			// tmp1 < pretposlednje mesto = novi pretail
+			tmp1 = tmpPeak;
 
-		}//end_for_i
+			if (tmpPeak->info > tmpPeak->link->info)
+			{
+				this->swap(tmpPeakPrevious, tmpPeak, tmpPeak, tmpPeak->link);
+			}
+
+
+
 	}
 
-
 }
+
+//
+//template <class T>
+//void CSortList<T>::sortList(bool arg)
+//{
+//	T** arr;
+//	int n = 0;
+//	Node<T>* TMP = this->head;
+//
+//	while (TMP != nullptr)
+//	{
+//		n++;
+//		TMP = TMP->getLink();
+//	}
+//
+//	arr = new T*[n];
+//	for (int i = 0; i < n; i++)
+//		arr[i] = new T();
+//
+//
+//	TMP = this->head;
+//	int i = 0;
+//	while (TMP != nullptr) {
+//
+//		arr[i] = new T(TMP->getInfo());
+//
+//		i++;
+//		TMP = TMP->getLink();
+//	}
+//
+//
+//	if (arg)
+//		//arg == true rastuci
+//	{
+//		for (int i = 0; i < n; i++){
+//			for (int j = n - 1; j > i; j--)
+//			{
+//				T* tmp = nullptr;
+//				if(*arr[j] < *arr[j-1])
+//				{
+//					tmp = arr[j];
+//					arr[j] = arr[j-1];
+//					arr[j-1] = tmp;
+//
+//				}
+//
+//			}//end_for_j
+//
+//		}//end_for_i
+//	}
+//
+//
+//}
 
 
 template <class T>
