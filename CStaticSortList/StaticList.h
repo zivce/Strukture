@@ -20,7 +20,15 @@ public:
 
 	void addToHead(T info);
 	friend ostream& operator<<(ostream& izlaz, SLList& tmpList) {
-		for (int i = 1; i < tmpList.size; i++)
+		for (int i = tmpList.head; i != 0; i = tmpList.data[i].link)
+		/*
+		+	Krene od head
+		+	pomera se za po link 
+		+	dok ne dodje do i == 0
+		+	tj nullptr
+		*/
+		
+		
 		{
 			izlaz << tmpList.data[i];
 
@@ -36,14 +44,34 @@ void SLList<T>::addToHead(T elem) {
 	if (lrmp == 0)
 		return;
 
+	/*
+	+ New node vv
+	+
+	+ ako lrmp dobije 
+	+ 0 == nullptr
+	+ kraj return;
+	*/
+
 	int tmp = lrmp;
 	lrmp = data[lrmp].link;
+
+	/*
+	+ dodajemo novi na head
+	*/
 	data[tmp].info = elem;
 	data[tmp].link = head;
 
+	/*
+	+ ako nema elemenata u listi
+	+ i head i tail ukazuju na novi
+	+ tmp 
+	+ ako ima onda head ukazuje na tmp
+	+
+	*/
+
 	if (head == 0)
 	{
-		head = tail = 0;
+		head = tail = tmp;
 	}
 	else 
 	{
@@ -68,9 +96,12 @@ SLList<T>::SLList(int n) {
 	head = tail = 0;
 	
 	lrmp = 1;
+
 	//od jedan krece zauzimanje prostora
 	data = new NodeStatic<T>[size + 1];
 	
-	for (int i = 1; i < size; i++)
-		data[i].link = i + 1;
+	for (int i = 0; i < size; i++)
+		data[i].link = i + 1; 
+
+	this->data[size].link = 0;
 }
