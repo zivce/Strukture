@@ -1,7 +1,6 @@
 #include "StaticList.h"
 
 void main() {
-	SLList<int> A();
 
 	//SLList<int> t(3);
 
@@ -30,6 +29,6 @@ void main() {
 	cout << m;
 	m.bubbleSort();
 
-
+	cout << m;
 
 }

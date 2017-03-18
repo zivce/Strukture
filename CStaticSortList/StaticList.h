@@ -70,8 +70,8 @@ void SLList<T>::bubbleSort()
 	{
 		peakTmp = head;
 		peakTmpLink = data[head].link;
-		/*data[peakTmp] != data[tail]*/
-		while (peakTmpLink != tail)
+
+		while (peakTmpLink != tmpUslov)
 		{
 			
 			if ( data[peakTmp] > data[peakTmpLink])
@@ -109,6 +109,7 @@ void SLList<T>::bubbleSort()
 			*tmp = data[peakTmp];
 			data[peakTmp] = data[peakTmpLink];
 			data[peakTmpLink] = *tmp;
+			cout << *this;
 		}
 
 
