@@ -31,6 +31,14 @@ public:
 		link = b;
 	}
 
+	Node(Node<T>* B)
+	{
+		this->info = B->info;
+		this->link = B->link;
+
+	}
+
+
 	friend ostream& operator<<(ostream& izlaz, Node& tmpA) {
 		izlaz << tmpA.info << "|/";
 		if (tmpA.link != nullptr)

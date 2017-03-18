@@ -55,10 +55,89 @@ public:
 		}
 
 	}
-
-	void sortList(bool arg);
+	void insertSort();
 
 };
+
+
+
+template <class T>
+void CSortList<T>::insertSort() {
+
+
+	Node<T>* tPtr1Previous = nullptr;
+
+	Node<T>* tPtr1 = head;
+
+	Node<T>* tPtr2Previous = head;
+
+	Node<T>* tPtr2 = head->link;
+
+	while (tPtr2 != nullptr)
+	/*
+	+	tPtr2 ide ispred tPtr1 
+	+	oznacava kraj sortiranja.
+	+	
+	+	tPtr1 ide do njega
+	+	i trazi manji/veci
+	+	od njega.
+	+
+	+	Ako nadje odradi promenu
+	+	ako ne onda pomeri tPtr2
+	+	na sledeci.
+	+
+	*/
+	
+	{
+		tPtr1Previous = nullptr;
+		tPtr1 = head;
+		while (tPtr1 != tPtr2 && tPtr1->info < tPtr2->info)
+		{
+			/*
+			+ Trazi prvo mesto gde treba da menja
+			*/
+			tPtr1Previous = tPtr1;
+			tPtr1 = tPtr1->link;
+
+		}
+
+		if (tPtr1 != tPtr2)
+			/*
+			+	Naso je negde iza tPtr2
+			+	veci i sad ih zameni.
+			+	ako nije naso tPtr2
+			+	se pomera.
+			+
+			*/
+		{
+			Node<T>* cuvarPtr2 = new Node<T>(tPtr2Previous);
+
+			this->swap(tPtr1Previous, tPtr1, tPtr2Previous, tPtr2);
+		/*
+		+	Izgubim pointer na ptr2
+		*/
+
+			tPtr2Previous = cuvarPtr2->link;
+			tPtr2 = tPtr2Previous->link;
+
+		}
+		else
+		{
+			tPtr2Previous = tPtr2;
+			tPtr2 = tPtr2->link;
+			}
+
+
+	}//end_while_ptr2
+
+
+
+
+
+}
+
+
+
 
 template <class T>
 void CSortList<T>::swap(Node<T>* previousA, Node<T>* a, Node<T>* previousB, Node<T>* b) {
@@ -161,58 +240,7 @@ void CSortList<T>::bubbleSort() {
 
 }
 
-//
-//template <class T>
-//void CSortList<T>::sortList(bool arg)
-//{
-//	T** arr;
-//	int n = 0;
-//	Node<T>* TMP = this->head;
-//
-//	while (TMP != nullptr)
-//	{
-//		n++;
-//		TMP = TMP->getLink();
-//	}
-//
-//	arr = new T*[n];
-//	for (int i = 0; i < n; i++)
-//		arr[i] = new T();
-//
-//
-//	TMP = this->head;
-//	int i = 0;
-//	while (TMP != nullptr) {
-//
-//		arr[i] = new T(TMP->getInfo());
-//
-//		i++;
-//		TMP = TMP->getLink();
-//	}
-//
-//
-//	if (arg)
-//		//arg == true rastuci
-//	{
-//		for (int i = 0; i < n; i++){
-//			for (int j = n - 1; j > i; j--)
-//			{
-//				T* tmp = nullptr;
-//				if(*arr[j] < *arr[j-1])
-//				{
-//					tmp = arr[j];
-//					arr[j] = arr[j-1];
-//					arr[j-1] = tmp;
-//
-//				}
-//
-//			}//end_for_j
-//
-//		}//end_for_i
-//	}
-//
-//
-//}
+
 
 
 template <class T>
@@ -299,10 +327,8 @@ void CSortList<T>::selSort()
 		xcgFirst = xcgFirst->link;
 
 	}
-
+	//tail se na kraju zameni
 	swap(xcgFirstPrevious, xcgFirst, xcgFirst, tail);
 	
-	while (tail->link != nullptr)
-		tail = tail->link;
-	//menjaj i tail
+	
 }

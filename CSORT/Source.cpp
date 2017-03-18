@@ -32,10 +32,16 @@ void main() {
 		cout << *A << "\n";;
 
 
-		A->selSort();
+		A->insertSort();
+
+		cout << *A << "\n";;
+
+
+
+	/*	A->selSort();
 
 		cout << *A << "\n";
-
+*/
 
 
 
