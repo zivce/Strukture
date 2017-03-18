@@ -32,9 +32,16 @@ void main() {
 		cout << *A << "\n";;
 
 
-		A->bubbleSort();
+		A->selSort();
 
 		cout << *A << "\n";
+
+
+
+
+	/*	A->bubbleSort();
+
+		cout << *A << "\n";*/
 
 
 		

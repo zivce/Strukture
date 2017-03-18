@@ -29,7 +29,7 @@ public:
 		return head;
 	}
 
-
+	void selSort();
 	Node<T>* getTail() {
 		return tail;
 	}
@@ -236,4 +236,73 @@ void CSortList<T>::addToHead(T A) {
 
 	if (tail == nullptr)
 		tail = head;
+}
+
+
+template <class T>
+void CSortList<T>::selSort()
+{
+	Node<T>* xcgFirstPrevious = nullptr;
+	Node<T>* xcgFirst = this->head;
+	Node<T>* innerTmp = this->head->link;
+	Node<T>* innerTmpPrevious = this->head;
+	 
+
+	while (xcgFirst->link != tail)
+	/*
+	*	Pomera se pointer na prvi node
+	*	menja se sve dok ne dodje to pre 
+	*	tail jer poslednji je 
+	*	vec sortiran
+	*/
+	
+	{
+		innerTmp = xcgFirst->link;
+		innerTmpPrevious = xcgFirst;
+
+		while (innerTmp != nullptr)
+		/*
+		*	ide do kraja i update tmpPeak
+		*	i swap sa prvim xcgFirst
+		*	na kraju se preskace
+		*
+		*/	
+		
+		
+		{
+			if (xcgFirst->info > innerTmp->info)
+
+			{
+				swap(xcgFirstPrevious, xcgFirst, innerTmpPrevious, innerTmp);
+				
+				/*
+				+	kad izadje iz petlje 
+				+	pointeri zamene mesta
+				*/
+
+				xcgFirst = innerTmp;
+
+				innerTmpPrevious = innerTmp;
+				
+				innerTmp = innerTmp->link;
+
+				
+
+
+			}
+			innerTmpPrevious = innerTmp;
+			innerTmp = innerTmp->link;
+		}
+
+
+		xcgFirstPrevious = xcgFirst;
+		xcgFirst = xcgFirst->link;
+
+	}
+
+	swap(xcgFirstPrevious, xcgFirst, xcgFirst, tail);
+	
+	while (tail->link != nullptr)
+		tail = tail->link;
+	//menjaj i tail
 }
