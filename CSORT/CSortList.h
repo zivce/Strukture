@@ -110,14 +110,10 @@ void CSortList<T>::insertSort() {
 			+
 			*/
 		{
-			Node<T>* cuvarPtr2 = new Node<T>(tPtr2Previous);
 
 			this->swap(tPtr1Previous, tPtr1, tPtr2Previous, tPtr2);
-		/*
-		+	Izgubim pointer na ptr2
-		*/
+	
 
-			tPtr2Previous = cuvarPtr2->link;
 			tPtr2 = tPtr2Previous->link;
 
 		}
