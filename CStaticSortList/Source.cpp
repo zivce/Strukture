@@ -3,19 +3,19 @@
 void main() {
 	SLList<int> A();
 
-	SLList<int> t(3);
+	//SLList<int> t(3);
 
-	t.addToHead(3);
-	t.addToHead(4);
-	t.addToHead(5);
-	//poslednji ne treba
-	// da doda
-	
-	cout << t;
-	
-	t.bubbleSort(1);
-	
-	cout << t;
+	//t.addToHead(3);
+	//t.addToHead(4);
+	//t.addToHead(5);
+	////poslednji ne treba
+	//// da doda
+	//
+	//cout << t;
+	//
+	//t.bubbleSort();
+	//
+	//cout << t;
 
 	SLList<int> m(9);
 	m.addToHead(5);
@@ -28,7 +28,7 @@ void main() {
 	m.addToHead(178);
 
 	cout << m;
-	m.bubbleSort(1);
+	m.bubbleSort();
 
 
 

@@ -12,7 +12,7 @@ private:
 public:
 
 
-	void bubbleSort(bool rastuciOpadajuci);
+	void bubbleSort();
 
 	SLList();
 	SLList(int n);
@@ -59,73 +59,60 @@ public:
 
 
 template <class T>
-void SLList<T>::bubbleSort(bool p)
+void SLList<T>::bubbleSort()
 
 {
-	if (p)
+	int peakTmp, peakTmpLink;
+	int tmpUslov = tail;
+
+
+	while(data[tmpUslov] != data[head])
 	{
-		NodeStatic<T> tmp1;
-		tmp1.link = tail;
-
-		while (tmp1.info != this->data[head].info)
-
+		peakTmp = head;
+		peakTmpLink = data[head].link;
+		/*data[peakTmp] != data[tail]*/
+		while (peakTmpLink != tail)
 		{
+			
+			if ( data[peakTmp] > data[peakTmpLink])
+			{
+
+				NodeStatic<T>* tmp = new NodeStatic<T>();
+				*tmp = data[peakTmp];
+				data[peakTmp] = data[peakTmpLink];
+				data[peakTmpLink] = *tmp;
+				
+				cout << *this;
+				
+				
+			}
+
 			/*
-			+ peak se update
-			+ ako nadje nekog koji
-			+ je veci od 
-			+ od njega ako 
-			+ ne nastavlja do
-			+ pretposlednjeg
-			+ i onda se swap sa
-			+ njim
 			+
+			+	Sad predje na sledeci i ide dok 
+			+	PeakTMPLink ne bude 0 
+			+	tj to je kad je na pretposlednje PEAK
 			*/
-			NodeStatic<T> tmpPeak(this->data[head]);
-			//nullptr
-			NodeStatic<T> tmpPeakPrevious(0);
 
-			while (tmpPeak.link != tmp1)
-			{
-				if (tmpPeak.info > data[tmpPeak.link].info)
-				{
-					this->swap(tmpPeak, data[tmpPeak.link]);
+			peakTmp = peakTmpLink;
 
-					if (tmpPeakPrevious.link == 0)
-					{
-						tmpPeakPrevious.link = head;
-					}
-					else
-					{
-						tmpPeakPrevious = this->data[tmpPeakPrevious.link];
-					}
+			peakTmpLink = this->data[peakTmp].link;
+		}
 
-				}
-				else
-				{
-					tmpPeakPrevious = tmpPeak;
-					tmpPeak = this->data[tmpPeak.link];
-				}
+		tmpUslov = peakTmp;
+		
+		
+		if (this->data[peakTmp] > this->data[peakTmpLink])
+		{
 
-
-			}
-			tmp1 = tmpPeak;
-
-			if (tmpPeak.info > data[tmpPeak.link].info)
-			{
-				this->swap(tmpPeak, data[tmpPeak.link]);
-			}
-
-
+			NodeStatic<T>* tmp = new NodeStatic<T>();
+			*tmp = data[peakTmp];
+			data[peakTmp] = data[peakTmpLink];
+			data[peakTmpLink] = *tmp;
 		}
 
 
-
-
-
 	}
-
-
 
 
 
@@ -192,8 +179,8 @@ SLList<T>::SLList(int n) {
 	//od jedan krece zauzimanje prostora
 	data = new NodeStatic<T>[size + 1];
 	
-	for (int i = 0; i < size; i++)
+	for (int i = 1; i < size; i++)
 		data[i].link = i + 1; 
 
-	this->data[size].link = 0;
+	this->data[size].link = -1;
 }
