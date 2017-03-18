@@ -10,7 +10,26 @@ void main() {
 	t.addToHead(5);
 	//poslednji ne treba
 	// da doda
-	t.addToHead(7);
-
+	
 	cout << t;
+	
+	t.bubbleSort(1);
+	
+	cout << t;
+
+	SLList<int> m(9);
+	m.addToHead(5);
+	m.addToHead(10);
+	m.addToHead(6);
+	m.addToHead(4);
+	m.addToHead(3);
+	m.addToHead(1);
+	m.addToHead(2);
+	m.addToHead(178);
+
+	cout << m;
+	m.bubbleSort(1);
+
+
+
 }

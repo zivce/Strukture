@@ -16,6 +16,13 @@ public:
 		info = tmp;
 		link = 0;
 	}
+	NodeStatic(NodeStatic& tmp)
+	{
+		this->info = tmp.info;
+		this->link = tmp.link;
+
+	}
+
 
 	NodeStatic(T tmp,int tmpNext) {
 		info = tmp;
