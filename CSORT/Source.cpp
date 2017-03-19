@@ -27,21 +27,22 @@ void main() {
 		A->addToHead(8);
 		A->addToHead(10);
 		A->addToHead(114);
-
-
-		cout << *A << "\n";;
-
-
-		A->insertSort();
+		A->addToHead(1);
+		A->addToHead(5);
+		A->addToHead(43);
 
 		cout << *A << "\n";;
 
 
+		//A->insertSort();
+		//cout << *A << "\n";;
 
-	/*	A->selSort();
+
+
+		A->selSort();
 
 		cout << *A << "\n";
-*/
+
 
 
 

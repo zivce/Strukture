@@ -112,13 +112,18 @@ void CSortList<T>::insertSort() {
 		{
 
 			this->swap(tPtr1Previous, tPtr1, tPtr2Previous, tPtr2);
-	
-
 			tPtr2 = tPtr2Previous->link;
 
 		}
 		else
 		{
+			/*
+			+	Nije naso jer tPtr2 == tPtr1
+			+	Predje na sledeci tPtr2
+			+	tPtr1 < RESET na HEAD
+			*/
+
+
 			tPtr2Previous = tPtr2;
 			tPtr2 = tPtr2->link;
 			}
@@ -272,59 +277,50 @@ void CSortList<T>::selSort()
 	Node<T>* innerTmpPrevious = this->head;
 	 
 
-	while (xcgFirst->link != tail)
-	/*
-	*	Pomera se pointer na prvi node
-	*	menja se sve dok ne dodje to pre 
-	*	tail jer poslednji je 
-	*	vec sortiran
-	*/
+	while (xcgFirst != tail)
+	
 	
 	{
+
+		Node<T>* min = xcgFirst;
+		Node<T>* minPrev = xcgFirstPrevious;
+		
 		innerTmp = xcgFirst->link;
 		innerTmpPrevious = xcgFirst;
 
 		while (innerTmp != nullptr)
-		/*
-		*	ide do kraja i update tmpPeak
-		*	i swap sa prvim xcgFirst
-		*	na kraju se preskace
-		*
-		*/	
 		
-		
+
+
 		{
-			if (xcgFirst->info > innerTmp->info)
+			if (innerTmp->info > min->info)
 
 			{
-				swap(xcgFirstPrevious, xcgFirst, innerTmpPrevious, innerTmp);
-				
-				/*
-				+	kad izadje iz petlje 
-				+	pointeri zamene mesta
-				*/
-
-				xcgFirst = innerTmp;
-
-				innerTmpPrevious = innerTmp;
-				
-				innerTmp = innerTmp->link;
-
-				
 
 
+				minPrev = innerTmpPrevious;
+
+				min = innerTmp;
 			}
+
 			innerTmpPrevious = innerTmp;
 			innerTmp = innerTmp->link;
 		}
+
+
+			if(min != xcgFirst)
+			{
+				swap(xcgFirstPrevious, xcgFirst, minPrev,min);
+				xcgFirst = min;
+				cout << *this <<"\n";
+			}
+		
 
 
 		xcgFirstPrevious = xcgFirst;
 		xcgFirst = xcgFirst->link;
 
 	}
-	//tail se na kraju zameni
-	swap(xcgFirstPrevious, xcgFirst, xcgFirst, tail);
 	
 	
 }
