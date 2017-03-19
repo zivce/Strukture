@@ -12,7 +12,10 @@ private :
 
 public:
 	void addToHead(T elem);
-	
+	void addToTail(T elem);
+
+
+
 	CStaticSortDList() {
 		lrmp = 0;
 		size = 0;
@@ -49,7 +52,7 @@ public:
 
 	friend ostream& operator<<(ostream& izlaz, CStaticSortDList& btmp)
 	{
-		for (int i = btmp.head; i != btmp.tail; i--)
+		for (int i = btmp.head; i != btmp.tail; i = btmp.arrData[i].next)
 		{
 			
 			izlaz << btmp.arrData[btmp.arrData[i].previous]<< " < " << btmp.arrData[i] << " > " <<btmp.arrData[btmp.arrData[i].next] << "  ";
@@ -59,6 +62,36 @@ public:
 
 
 };
+
+template <class T>
+void CStaticSortDList<T>::addToTail(T elem)
+{
+	if (lrmp == 0)
+		return;
+
+
+	int tmp = lrmp;
+	lrmp = arrData[lrmp].next;
+
+	arrData[tmp].info = elem;
+	arrData[tmp].next = 0;
+	arrData[tmp].previous = tail;
+
+	if (tail == 0)
+	{
+		head = tail = tmp;
+
+	}
+	else {
+
+		arrData[tail].next = tmp;
+		tail = tmp;
+
+	}
+
+}
+
+
 
 template <class T>
 void CStaticSortDList<T>::addToHead(T elem)

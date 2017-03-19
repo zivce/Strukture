@@ -19,6 +19,10 @@ void main() {
 	B.addToHead(120);
 
 
+	B.addToTail(2);
+
+
+
 	cout << B;
 
 }
