@@ -16,6 +16,13 @@ public:
 		info = tmp;
 		link = 0;
 	}
+	NodeStatic(NodeStatic& tmp)
+	{
+		this->info = tmp.info;
+		this->link = tmp.link;
+
+	}
+
 
 	NodeStatic(T tmp,int tmpNext) {
 		info = tmp;
@@ -39,4 +46,27 @@ public:
 		return this->info == tmp.info;
 
 	}
+
+	bool operator>(NodeStatic& tmp)
+	{
+		return this->info > tmp.info;
+
+	}
+
+
+	void operator=(NodeStatic& a) {
+		this->info = a.info;
+		//this->link = a->link;
+
+	}
+
+
+	bool operator!=(NodeStatic& tmp)
+	{
+		return this->info != tmp.info;
+
+	}
+
+	
+
 };
