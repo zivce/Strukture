@@ -25,6 +25,10 @@ public:
 
 	}
 
-
+	friend ostream& operator<<(ostream& izlaz, StaticNodeDLL& atmp)
+	{
+		izlaz <<  atmp.info << " ";
+		return izlaz;
+	}
 
 };
