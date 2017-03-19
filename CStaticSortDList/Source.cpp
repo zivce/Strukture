@@ -21,8 +21,43 @@ void main() {
 
 	B.addToTail(2);
 
+	cout << B << "\n";
 
 
-	cout << B;
+	B.deleteFromTail();
+	B.deleteFromTail();
+
+	B.deleteFromTail();
+	
+	cout << B << "\n";
+	
+	B.addToHead(312);
+	
+	cout << B << "\n";
+	
+	B.addToHead(89);
+	
+	cout << B << "\n";
+	
+	B.addToTail(54);
+	
+	cout << B << "\n";
+	/*
+	+ Ovaj deo ne dodaje u listu LRMP pun!
+	*/
+	B.addToHead(1);
+	B.addToHead(62);
+	B.addToTail(646);
+
+	cout << B << "\n";
+
+
+	B.deleteFromHead();
+	B.deleteFromHead();
+	cout << B << "\n";
+
+	B.bubbleSort();
+
+
 
 }
