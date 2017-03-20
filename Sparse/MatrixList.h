@@ -15,7 +15,8 @@ public:
 
 	
 	void insertValNode(int i, int j, T val);
-	
+
+	ValNode<T>& getElem(int i, int j);
 
 
 	MatrixList() {
@@ -93,22 +94,25 @@ public:
 		cout << "i j Mat[i][j]\n";
 
 		RowColNode<T>* tmpRow = tmpM.masterRowHead;
-		ValNode<T>* tmpColVal;
+		RowColNode<T>* tmpCol = tmpM.masterColHead;
+
 		
 		int i = 1;
 		int j = 1;
 		while (tmpRow->rowOrCol != -1)
 		{	//prolazi po redovima row next node se menja
-			tmpColVal = tmpRow->matNodes;
+			
 
-			while (tmpColVal)
+			while (tmpCol->rowOrCol != -1)
 			{
 				
-					cout << *tmpColVal << "\n";
+					cout << tmpM.getElem(i,j) << "\n";
 				
-				tmpColVal = tmpColVal->rNextMNode;
+				tmpCol = tmpCol->nextRowCol;
 				j++;
 			}
+
+			tmpCol = tmpM.masterColHead;
 			i++;
 			j = 1;
 			tmpRow = tmpRow->nextRowCol;
@@ -117,6 +121,45 @@ public:
 	}
 };
 
+template <class T>
+ValNode<T>& MatrixList<T>::getElem(int i, int j)
+{
+	RowColNode<T>* tmpRowHead = masterRowHead;
+	RowColNode<T>* tmpColHead = masterColHead;
+
+	ValNode<T>* tmpColValNode;
+	ValNode<T>* returnThis;
+
+	while (tmpRowHead->rowOrCol != -1)
+	{
+			tmpColValNode = tmpRowHead->matNodes;
+
+			while(tmpColValNode)
+			{
+
+				if (tmpColValNode->currRow == i && 
+					tmpColValNode->currCol == j)
+				{
+					returnThis = tmpColValNode;
+					return *returnThis;
+				}
+
+				tmpColHead = tmpColHead->nextRowCol;
+				
+				tmpColValNode = tmpColValNode->rNextMNode;
+			}
+			
+
+			tmpRowHead = tmpRowHead->nextRowCol;
+	}
+		
+
+	//nije nadjen
+
+	return ValNode<T>(i,j, 0);
+
+
+}
 
 template <class T>
 void MatrixList<T>::insertValNode(int m, int n, T val)
@@ -139,127 +182,126 @@ void MatrixList<T>::insertValNode(int m, int n, T val)
 
 			if (tmpRowHead->rowOrCol == m && tmpColHead->rowOrCol == n)
 			{
+
+				/*
+				+	Naso je mesto m,n
+				+	ako nema elementa na m n dodaj
+				+	NoviCvor
+				*/
+				if (tmpColHead->matNodes == nullptr &&
+					tmpRowHead->matNodes == nullptr)
+				{
+					tmpColHead->matNodes = NoviCvor;
+					tmpRowHead->matNodes = NoviCvor;
+					return;
+				}
+
 				/*
 				+	Linkuj ako ima jos neki cvor u
 				+	istom redu/koloni!
 				*/
 
-
-				RowColNode<T>* tmpColHeadTmp = tmpColHead;
-
-				tmpColHead = masterColHead;
-
-				while (tmpColHead->rowOrCol != -1)
+				if (tmpColHead->matNodes != nullptr)
 				{
-					if (tmpColHead->matNodes != nullptr && tmpRowHead->matNodes != nullptr)
-					{
-						/*
-						+	Ako je noviCvor current column manji od
-						+	nekog koji je vec u listi onda NoviCvor
-						+	row Next Node ukazuje na taj Node
-						+	a pointer na taj cvor se preusmeri na
-						+	noviCvor
-						+	u suprotnom taj cvor ukazuje na NoviCvor
-						+	row next mode od tmpColHead
-						*/
-						if (NoviCvor->currRow < tmpColHead->matNodes->currRow)
-						{
-							NoviCvor->rNextMNode = tmpColHead->matNodes;
-							tmpColHead->matNodes->rNextMNode = NoviCvor;
-							
-						}
+					//Znaci da postoji neki element
+					//u tmpColHead koloni
 
-						else
-						{
-							tmpColHead->matNodes->rNextMNode = NoviCvor;
-						}
+
+					ValNode<T>* tmpColHeadTmp = tmpColHead->matNodes;
+					
+					//Ima vise elemenata u koloni 
+					while (tmpColHeadTmp->cNextMNode != nullptr &&
+						tmpColHeadTmp != nullptr)
+					{
+						tmpColHeadTmp = tmpColHeadTmp->cNextMNode;
 					}
 
-					tmpColHead = tmpColHead->nextRowCol;
-					//fixiran red prodje po koloni da vidi 
-					//da li ima jos neki element u vrsti!
-				}
 
-				tmpColHead = tmpColHeadTmp;
-
-				RowColNode<T>* tmpRowHeadTmp = tmpRowHead;
-				tmpRowHead = masterRowHead;
-
-				while (tmpRowHead->rowOrCol != -1)
-				{
-					if (tmpRowHead->matNodes != nullptr && tmpColHead->matNodes != nullptr)
+					if (tmpColHeadTmp->currRow > NoviCvor->currRow)
 					{
-						if (NoviCvor->currCol < tmpColHead->matNodes->currCol)
-						{
-							NoviCvor->cNextMNode = tmpColHead->matNodes;
-							tmpColHead->matNodes->cNextMNode = NoviCvor;
-							
-						}
+						// NoviCvor je ispred onog na koji ukazuje
+						//tmpColHead->matNodes
+						// => swap
 
-						else
-							tmpColHead->matNodes->cNextMNode = NoviCvor;
+						ValNode<T>* tmpSwap = tmpColHeadTmp;
+						tmpColHeadTmp = NoviCvor;
+						tmpColHeadTmp->cNextMNode = tmpSwap;
+					}
+					else
+					{
+						//NoviCvor je iza onog na koji ukazuje
+						// tmpColHead->matNodes
+						// => nadovezemo na tmpColHeadTmp < noviCvor
+						tmpColHeadTmp->cNextMNode = NoviCvor;
 
 					}
 
-					tmpRowHead = tmpRowHead->nextRowCol;
 				}
 
-				tmpRowHead = tmpRowHeadTmp;
-
-			
-				/*
-				+	Dodavanje cvora na poziciju 
-				+			  m,n
-				+	vvvvvvvvvvvvvvvvvvvvvvvvvv
-				*/
-
-				if(tmpRowHead->matNodes == nullptr)
-					tmpRowHead->matNodes = NoviCvor;
 				else
 				{
-					/*
-					+	Pokusaj lancanja po redu!
-					+
-					*/
-					ValNode<T>* tmpTraverseRow = tmpRowHead->matNodes;
-
-					while (tmpTraverseRow->rNextMNode != nullptr)
-					{
-						tmpTraverseRow = tmpTraverseRow->rNextMNode;
-					}
-
-					tmpTraverseRow = NoviCvor;
-
-
-				}
-				if(tmpColHead->matNodes == nullptr)
+					//samo nadovezemo
 					tmpColHead->matNodes = NoviCvor;
-				else
+
+				}
+
+				if (tmpRowHead->matNodes != nullptr)
 				{
-					/*
-					+	Pokusaj lancanja po koloni!
-					+	vvvvvvvvvvvvvvvvvvvvvvvvvv
-					*/
+					//Znaci da postoji neki element
+					//u tmpRowHead redu
 
-					ValNode<T>* tmpTraverseColumn = tmpColHead->matNodes;
 
-					while (tmpTraverseColumn->cNextMNode != nullptr)
+					ValNode<T>* tmpRowHeadTmp = tmpRowHead->matNodes;
+					//Ima vise elemenata u koloni 
+					// ako je !tmpRowHeadTmp 
+					//nema elemenata u tom redu
+
+					while (tmpRowHeadTmp->rNextMNode != nullptr
+						&& tmpRowHeadTmp != nullptr)
 					{
-						tmpTraverseColumn = tmpTraverseColumn->cNextMNode;
+						tmpRowHeadTmp = tmpRowHeadTmp->rNextMNode;
 					}
 
-					tmpTraverseColumn = NoviCvor;
 
+					if (tmpRowHeadTmp->currCol > NoviCvor->currCol)
+					{
+						// NoviCvor je ispred onog na koji ukazuje
+						//tmpRowHead->matNodes
+						// => swap
+
+						ValNode<T>* tmpSwap = tmpRowHeadTmp;
+						tmpRowHeadTmp = NoviCvor;
+						tmpRowHeadTmp->rNextMNode = tmpSwap;
+					}
+					else
+					{
+						//NoviCvor je iza onog na koji ukazuje
+						// tmpRowHead->matNodes
+						// => nadovezemo na tmpRowHeadTmp < noviCvor
+						tmpRowHeadTmp->rNextMNode = NoviCvor;
+
+					}
+
+				}
+
+				else
+				{
+					//samo nadovezemo
+					tmpRowHead->matNodes = NoviCvor;
 
 				}
 
 				return;
+				
+			}//end nasao je poziciju m i n 
 
-			}
-			
-			
+			/*
+			+ Spoljna while petlja!
+			+
+			*/
 			tmpColHead = tmpColHead->nextRowCol;
 		}
+
 		tmpColHead = masterColHead;
 		tmpRowHead = tmpRowHead->nextRowCol;
 	}
@@ -298,3 +340,34 @@ void MatrixList<T>::insertValNode(int m, int n, T val)
 //j = 1;
 //tmpCol = tmpM.masterColHead;
 //tmpRow = tmpRow->nextRowCol;
+
+
+
+/*
++	Ako je noviCvor current column manji od
++	nekog koji je vec u listi onda NoviCvor
++	row Next Node ukazuje na taj Node
++	a pointer na taj cvor se preusmeri na
++	noviCvor
++	u suprotnom taj cvor ukazuje na NoviCvor
++	row next mode od tmpColHead
+*/
+
+//if (NoviCvor->currRow < tmpColHeadTmp->matNodes->currRow)
+//{
+//	NoviCvor->rNextMNode = tmpColHead->matNodes;
+//	tmpColHead->matNodes->rNextMNode = NoviCvor;
+//
+//}
+//
+//else
+//{
+//	tmpColHead->matNodes->rNextMNode = NoviCvor;
+//}
+//
+//						}
+//
+//						tmpColHead = tmpColHead->nextRowCol;
+//						//fixiran red prodje po koloni da vidi 
+//						//da li ima jos neki element u vrsti!
+//
