@@ -10,16 +10,20 @@ public:
 	unsigned int f(int key)
 	{
 		unsigned int a = 0;
-		a += key / 10000;
+		a += key / 1000;
 		a += (key / 100) % 100;
-		a += key % 10;
+		a += (key % 100) ;
 		//metod presavijanja
 		return a;
 	}
 
-	unsigned int h(HashObj& t)
+	virtual unsigned int h(HashObj& t)
 	{
 		return f(t.getKey()) % length;
+	}
+	virtual unsigned int h(int key)
+	{
+		return f(key) % length;
 	}
 
 	unsigned int g(unsigned int a)

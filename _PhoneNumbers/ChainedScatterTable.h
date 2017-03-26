@@ -63,6 +63,7 @@ public:
 
 		t->next = nullptr;
 		tail->next = t;
+		this->count++;
 	}
 
 	void removeFromHead(unsigned int a) {
@@ -91,6 +92,7 @@ public:
 			arr[removeThis]->status == 1)
 			{
 				this->removeFromHead(removeThis);
+				this->count--;
 			}
 
 	}
@@ -104,13 +106,15 @@ public:
 		{
 			//sinonim dodamo na tail
 			this->addToTail(indx,t);
+			this->count++;
 			return;
 		}
 			//ako je status = 0
-			cout << indx << "\n";	
+			//cout << indx << "\n";	
 			arr[indx]->setKey(key);
 			arr[indx]->next = nullptr;
 			arr[indx]->status = 2;
-		
+			this->count++;
+
 	}
 };
