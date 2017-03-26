@@ -33,12 +33,28 @@ public:
 				tmp = tmp->next;
 			}
 			cout << "\n";
+
+			delete tmp;
 		}
 
-
 	}
-	
 
+	unsigned int find(int key)
+	{
+		unsigned int p = h(key);
+		if (arr[p]->status == 2)
+		{
+			return p;
+		}
+		else if(arr[p]->status == 1)
+		{//ako je brisan element ostaju sinonimi
+			return p;
+		}
+		else
+		{
+			return 0U;
+		}
+	}
 	void addToTail(unsigned int a, HashObj* t)
 	{
 		HashObj* tail = arr[a];
@@ -49,7 +65,35 @@ public:
 		tail->next = t;
 	}
 
-	//void remove(int key)
+	void removeFromHead(unsigned int a) {
+		HashObj* tmp = this->arr[a];
+		
+		if (arr[a]->next != nullptr)
+		{
+			arr[a] = arr[a]->next;
+			arr[a]->status = 1;
+			delete tmp;
+		}
+		else
+		{
+			arr[a]->setKey(0);
+			arr[a]->status = 0;
+			//nema elementa samo je jedan
+
+		}
+
+		
+	}
+
+	void remove(int key) {
+		unsigned int removeThis = h(key);
+		if (arr[removeThis]->status == 2 ||
+			arr[removeThis]->status == 1)
+			{
+				this->removeFromHead(removeThis);
+			}
+
+	}
 	void insert(int key)
 	{
 		HashObj* t = new HashObj(key);
