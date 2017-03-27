@@ -88,12 +88,35 @@ public:
 
 	void remove(int key) {
 		unsigned int removeThis = h(key);
-		if (arr[removeThis]->status == 2 ||
-			arr[removeThis]->status == 1)
+		if (arr[removeThis]->status == 2)
 			{
-				this->removeFromHead(removeThis);
-				this->count--;
-			}
+				if(arr[removeThis]->getKey() == key)
+				{
+					this->removeFromHead(removeThis);
+					this->count--;
+				}
+				else
+				{
+					HashObj* tmp = arr[removeThis];
+					HashObj* prev = nullptr;
+
+					while (tmp != nullptr)
+					{
+						if (tmp->getKey() == key)
+						{
+							HashObj* del = tmp;
+							prev->next = tmp->next;
+							delete del;
+							this->count--;
+							return;
+						}
+						prev = tmp;
+						tmp = tmp->next;
+					}
+				}
+			}//status = 2
+
+
 
 	}
 	void insert(int key)

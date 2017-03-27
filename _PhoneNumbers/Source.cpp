@@ -15,4 +15,10 @@ void main()
 
 
 	ktmp.print(0, 1249);
+	ktmp.remove(6083420);
+
+	cout << "removed @" << ktmp.h(6083420);
+
+	ktmp.print(0, 1249);
+
 }
