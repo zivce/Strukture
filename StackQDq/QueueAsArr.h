@@ -55,9 +55,13 @@ public:
 
 	}
 
+	bool isEmpty()
+	{
+		return (first == last);
 
+	}
 	int deq() {
-		if (first == last)
+		if (isEmpty())
 			throw "Prazan niz";
 
 		int tmp = niz[first];

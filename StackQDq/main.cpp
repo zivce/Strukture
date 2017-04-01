@@ -361,7 +361,21 @@ void main()
 		cout << infix2postfix("((a+b)^c)/d;");
 		*/
 
-		
+		DeqAsArr t(5);
+
+		t.enq(4);
+		t.enq(5);
+		t.enqHead(3);
+		t.enqHead(44);
+		t.deqTail();
+		cout << t;
+
+		t.enq(3);
+
+		//ne treba da se izvrsi!
+		t.enqHead(2);
+
+		cout << t;
 
 
 	}
