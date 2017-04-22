@@ -5,6 +5,16 @@
 #include <iostream>
 using namespace std;
 
+int BTree::size(BNode* tmp)
+{
+	if (tmp == nullptr)
+		return 0;
+	else
+		return 1 + size(tmp->left) + size(tmp->right);
+
+}
+
+
 void BTree::insert(int elem)
 {
 	BNode* prev = nullptr;
@@ -42,7 +52,7 @@ void BTree::insert(int elem)
 	{
 		prev->right = new BNode(elem);
 	}
-	else
+	else 
 	{
 		prev->left = new BNode(elem);
 	}
@@ -99,6 +109,22 @@ void BTree::preOrder(BNode* ptr)
 	}
 
 }
+//mod for different nodes
+void BTree::inOrderArr(BNode* ptr,int* data,int* i)
+{
+	
+
+	if (ptr != nullptr)
+	{
+		
+		inOrderArr(ptr->left,data,i);
+		data[(*i)++] = ptr->info;
+		inOrderArr(ptr->right,data,i);
+
+
+	}
+}
+
 void BTree::inOrder(BNode* ptr)
 {
 
@@ -139,6 +165,176 @@ void BTree::itPreOrder()
 
 
 }
+
+void BTree::inItOrder()
+{
+	BNode* tmp = this->root;
+	Stek T(2 * this->countNodes);
+	bool done = 0;
+
+	while (!done)
+	{
+		
+		//to the leftmost node
+		while (tmp != nullptr)
+		{
+			//pops later
+			T.push(tmp);
+			tmp = tmp->left;
+		}
+		
+
+		tmp = T.pop();
+		cout << *tmp;
+
+		if (tmp->right != nullptr)
+		{
+			tmp = tmp->right;
+		}
+		else
+			tmp = nullptr;
+			
+		if (T.isEmpty() && tmp==nullptr)
+			done = 1;
+	}
+		
+}
+
+
+void BTree::delByCopy(BNode* t)
+{
+	
+	if (t->right == nullptr && t->left == nullptr)
+	{
+		delete t;
+		return;
+	}
+
+	if (t->left == nullptr)
+		t = t->right;
+	else if (t->right == nullptr)
+		t = t->left;
+	else
+	{
+		BNode* tmp = t->left;
+		BNode* prev = t;
+
+		//rightmost in left subtree
+		while (tmp->right != nullptr)
+		{
+			prev = tmp;
+			tmp = tmp->right;
+		}
+
+		t->info = tmp->info;
+
+		if (prev == t)
+			prev->left = tmp->left;
+		else
+			prev->right = tmp->left;
+	}
+
+
+}
+
+
+
+
+
+
+
+
+
+void BTree::delByMerge(BNode* t)
+{
+	BNode* tmp = t;
+	if (t != nullptr)
+	{
+		if (t->right == nullptr && t->left == nullptr)
+		{
+			delete t;
+			return;
+		}
+		if (t->right == nullptr)//ako ima nula ili jednog potomka
+		{//prvo ako nema desnog  pointer 
+			//roditelja se postavlja se na levi
+			*t = *t->left;
+		}
+		else if (t->left == nullptr)
+		{
+
+			*t = *t->right;
+			
+		}
+		else
+		{
+			//rightmost is attached to 
+			//right subtree of t
+			//keeping the order!
+
+			tmp = tmp->left;
+			while (tmp->right != nullptr)//dokle god postoji tmp->right
+			{
+				tmp = tmp->right;
+			}
+			//dodavanje na desno podstablo
+			//krajnje desnog u levom 
+			//podstablu
+			tmp->right = t->right;
+
+			*t = *t->left;
+		}
+	}
+
+
+
+
+}
+
+
+void BTree::findAndDeleteMerge(int elem) {
+	BNode* tmp = this->root;
+	BNode* prev = nullptr;
+
+	while (tmp != nullptr)
+	{
+		if (tmp->info == elem)
+			break;
+		prev = tmp;
+		if (tmp->info < elem)
+		{
+			tmp = tmp->right;
+		}
+		else
+			tmp = tmp->left;
+
+	}
+
+	if (tmp != nullptr && tmp->info == elem)
+	{
+		//delByMerge(tmp);
+		delByCopy(tmp);
+		/*
+		if (tmp == this->root)
+		{
+			delByMerge(root);
+		}
+		else if (prev->left == tmp)
+		{
+			delByMerge(prev->left);
+		}
+		else
+			delByMerge(prev->right);
+		*/
+	}
+
+	else if (root != nullptr)
+		throw "not found!";
+	else
+		throw "empty tree";
+
+}
+
 
 
 void BTree::itPostOrder()
@@ -231,13 +427,7 @@ void BTree::breadthFirst()
 				T.enq(tmp->left);
 			if (tmp->right)
 				T.enq(tmp->right);
-
-
 		}
-
-
 	}
-
-
 }
 
