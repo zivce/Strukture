@@ -11,7 +11,24 @@ void main()
 	T.insert(3, 0);
 	T.insert(5, 0);
 
+
 	T.print();
+
+	cout << "\n\n";
+
+	T.buildMaxHeap();
+
+	T.print();
+
+
+	cout << "\n\n";
+
+
+	T.buildMinHeap();
+
+	T.print();
+
+
 
 	DynHeap P;
 	P.insert(30, 0);

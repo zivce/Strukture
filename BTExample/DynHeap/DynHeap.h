@@ -53,6 +53,42 @@ public:
 
 
 	}
+	//metod buildMinHeap, buildMaxHeap
+	//rekurzivno sa maxHeapify, minHeapify!
+
+	void buildMaxHeap()
+	{
+		buildMax(this->root);
+		return;
+	}
+	
+	void buildMax(HeapNode* t)
+	{
+		if (t != nullptr)
+		{
+			maxHeapify(t);
+			buildMax(t->left);
+			buildMax(t->right);
+		}
+	}
+
+
+	void buildMinHeap()
+	{
+		buildMin(this->root);
+		return;
+	}
+
+	void buildMin(HeapNode* t)
+	{
+		if (t != nullptr)
+		{
+			minHeapify(t);
+			buildMin(t->left);
+			buildMin(t->right);
+		}
+	}
+
 
 	void mergeWith(DynHeap& a)
 	{
