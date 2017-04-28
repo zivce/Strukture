@@ -5,6 +5,106 @@
 #include <iostream>
 using namespace std;
 
+
+bool BTree::findNode(BNode* t, int k2)
+{
+	while (t != nullptr)
+		{
+			if (t->info < k2)
+				t = t->right;
+			else if (t->info > k2)
+				t = t->left;
+			else
+				return true;
+		}
+
+	return false;
+}
+void BTree::postOrderLCA(BNode* t, int k1, int k2, bool* p1, bool* p2,int* r)
+{
+	if (t != nullptr)
+	{
+		//postOrder!
+		//dva puta pozvana da bi isla
+		//po dubini
+		postOrderLCA(t->left, k1, k2, p1, p2,r);
+		postOrderLCA(t->right, k1, k2, p1, p2,r);
+
+		//if t->info < k1 trazi u levom podstablu
+		//p1 true ako je u levom podstablu
+		//p2 true ako je u desnom podstablu
+
+		if (t->info < k1)
+		{
+			*p1 = findNode(t->right, k1);
+		}
+		else
+			*p2 = findNode(t->left, k1);
+		
+
+		if (t->info < k2)
+		{
+			*p1 = findNode(t->right, k2);
+		}
+		else
+			*p2 = findNode(t->left, k2);
+
+		//ako negde nadje samo u jednom podstablu
+		//tj ako je xor zadovoljen
+		//mora da se anuliraju jer moguce 
+		//pre povratku iz rekurzije 
+		//da se promeni druga vrednost
+
+		if (*p1 ^ *p2)
+		{
+			*p1 = false;
+			*p2 = false;
+		}
+
+
+		if (*p1 & *p2)
+		{
+			*p1 = false;
+			*p2 = false;
+			*r = t->info;	
+		}
+
+
+	}
+
+}
+
+
+int BTree::leastCommonOuter(int k1,int k2)
+{
+	bool foundFirst = false;
+	bool foundSecond = false;
+	
+	int rez = 0;
+	
+	postOrderLCA(this->root, k1, k2, &foundFirst, &foundSecond,&rez);
+	//na kraju programa su foundFirst i foundSecond 
+	//postavljeni na false 
+	//ako ih je findNode nasao
+
+	//ako se promeni rez 
+	//onda imaju zaj pretka
+
+	if (rez)
+		return rez;
+	else
+		return 0;//neuspesno!
+}
+/*
+*	tmp - node za koji ispita 
+*	k1,k2 vrednosti cvorova
+*	t1,t2 predak oba cvora oba true! 
+*/
+
+
+
+
+
 int BTree::size(BNode* tmp)
 {
 	if (tmp == nullptr)
@@ -56,6 +156,8 @@ void BTree::insert(int elem)
 	{
 		prev->left = new BNode(elem);
 	}
+	
+
 	this->countNodes++;
 
 }
@@ -96,6 +198,7 @@ void BTree::postOrder(BNode* ptr)
 
 
 }
+
 void BTree::preOrder(BNode* ptr)
 {
 	if (ptr != nullptr)

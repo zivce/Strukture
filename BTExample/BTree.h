@@ -9,6 +9,13 @@ private:
 	BNode* root;
 	int countNodes;
 public:
+	int leastCommonOuter(int k1, int k2);
+	
+	bool findNode(BNode* t, int k1);
+
+
+	void postOrderLCA(BNode* t, int k1, int k2, bool* p1, bool* p2,int* rez);
+
 
 	BNode* getR()
 	{
@@ -142,6 +149,111 @@ public:
 		cout << "max level: " << maxLvl << " num of nodes: " << maxNodes;
 	}
 	
+	int countDiffTree()
+	{
+		if (this->root == nullptr)
+			throw "empty";
+
+		int count = 0;
+		int* dupArr = new int[this->treeSize()];
+		int countDup = 0;
+
+		countDiff(root,&count,dupArr,&countDup);
+		return count;
+	
+	}
+
+
+	void BTree::inOrder(BNode* ptr,int a,bool* p)
+	{
+
+		if (ptr != nullptr)
+		{
+
+
+			inOrder(ptr->left,a, p);
+			
+			if (a == ptr->info)
+				*p = true;
+			else
+				*p = false;
+			
+			inOrder(ptr->right,a,p);
+
+
+		}
+
+	}
+
+	/*
+	* findDup
+	* checks arr first
+	* if in arr already counted once
+	* else traverse and if finds another one 
+	* adds that to arr returns true
+	* 
+	*
+	*/
+
+	bool findDup(BNode* tmp, int* arr,int* countDup)
+	{
+		
+		/*
+		* Trazi u nizu duplikat prvo
+		* ako ne nadje ide kroz stablo
+		* ako nadje onda vrati true
+		* nema potrebe da ponovo prolazi
+		* stablo
+		*/
+		
+			for (int i = 0; i < *countDup; i++)
+				if (tmp->info == arr[i])
+				{
+					return true;
+				}
+					
+		//nalazi prvi duplikat!
+		//racuna se jednom 
+		//levo ili desno od tmp
+			bool p = false;
+			//proveri dal ima duplikat
+			inOrder(tmp->left, tmp->info,&p);
+			inOrder(tmp->right, tmp->info, &p);
+
+			if (p)
+			{
+				arr[*countDup] = tmp->info;
+				(*countDup)++;
+				return false;
+			}
+			else
+				return false;
+	}
+	
+	/*
+	* tmp = node in tree
+	* count = trazeni rez
+ 	* countDup = broj duplikata
+	* dupArr = cuva dup elems 
+	*/
+
+	int countDiff(BNode* tmp,int* count,int* dupArr,int* countDup)
+	{
+		if (tmp == nullptr)
+			return 0;
+		else
+		{ 
+			//obidje celo stablo ako nadje duplicate return!
+			//stavi u duplicates arr?
+
+			if(!findDup(tmp,dupArr,countDup))
+				(*count)++;
+
+			return countDiff(tmp->left, count,dupArr,countDup) 
+				+ countDiff(tmp->right ,count,dupArr,countDup);
+		}
+	}
+
 	
 	void mergeTrees(BTree& a, BTree b)
 	{
@@ -295,6 +407,8 @@ public:
 
 		return rez;
 	}
+
+
 
 
 
