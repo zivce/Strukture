@@ -27,6 +27,7 @@ void BTree::postOrderLCA(BNode* t, int k1, int k2, bool* p1, bool* p2,int* r)
 		//postOrder!
 		//dva puta pozvana da bi isla
 		//po dubini
+		
 		postOrderLCA(t->left, k1, k2, p1, p2,r);
 		postOrderLCA(t->right, k1, k2, p1, p2,r);
 
@@ -83,10 +84,6 @@ int BTree::leastCommonOuter(int k1,int k2)
 	int rez = 0;
 	
 	postOrderLCA(this->root, k1, k2, &foundFirst, &foundSecond,&rez);
-	//na kraju programa su foundFirst i foundSecond 
-	//postavljeni na false 
-	//ako ih je findNode nasao
-
 	//ako se promeni rez 
 	//onda imaju zaj pretka
 
@@ -95,12 +92,6 @@ int BTree::leastCommonOuter(int k1,int k2)
 	else
 		return 0;//neuspesno!
 }
-/*
-*	tmp - node za koji ispita 
-*	k1,k2 vrednosti cvorova
-*	t1,t2 predak oba cvora oba true! 
-*/
-
 
 
 
@@ -184,20 +175,17 @@ BNode* BTree::search(int elem)
 
 }
 
-void BTree::postOrder(BNode* ptr)
-{
-	if (ptr != nullptr)
-	{
-		//prvo deca pa koren!
-		postOrder(ptr->left);
-		postOrder(ptr->right);
-
-		cout << ptr->info << " ";
-
-	}
-
-
-}
+//void BTree::postOrder(BNode* ptr)
+//{
+//	if (ptr != nullptr)
+//	{
+//		//prvo deca pa koren!
+//		postOrder(ptr->left);
+//		postOrder(ptr->right);
+//
+//		cout << ptr->info << " ";
+//	}
+//}
 
 void BTree::preOrder(BNode* ptr)
 {

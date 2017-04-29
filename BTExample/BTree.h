@@ -107,6 +107,105 @@ public:
 		}
 	}
 
+
+
+	int findAndLvl(BNode* t)
+	{
+		int lvl = 0;
+		BNode* tmp = this->root;
+
+		while (tmp != nullptr)
+		{
+			if (tmp->info == t->info)
+			{
+				return lvl;
+			}
+			else
+			{
+				if (tmp->info < t->info)
+				{
+					tmp = tmp->right;
+				}
+				else
+				{
+					tmp = tmp->left;
+				}
+				lvl++;
+			}
+		}
+	}
+
+
+void postOrdert(BNode* ptr,int* t,int* lvl)
+	{
+		if (ptr != nullptr)
+		{
+			//prvo deca pa koren!
+			postOrdert(ptr->left,t,lvl);
+			postOrdert(ptr->right,t,lvl);
+
+			
+			int k = findAndLvl(ptr);
+			
+			if (*lvl < k)
+			{
+				*t = ptr->info;
+				*lvl = k;
+
+			}
+				
+		}
+	}
+
+int deepestNode()
+	{
+		int t = 0;
+		
+		int lvlMax = 0;
+		
+		postOrdert(this->root,&t,&lvlMax);
+		cout << "deepest node at lvl " << lvlMax << " " ;
+		return t;
+
+	}
+
+
+	int getMaxWidth()
+	{
+		int maxWidth = 0;
+		int width;
+		int h = heightTree();
+		int i;
+		for (i = 1; i <= h; i++)
+		{
+			width = getWidth(root, i);
+			if (width > maxWidth)
+				maxWidth = width;
+
+		}
+		return maxWidth;
+	}
+
+	int getWidth(BNode* t, int level)
+	{
+		if(t!=nullptr)
+		{
+			if (root == nullptr)
+			return 0;
+
+			if (level == 1)
+				return 1;
+			else if (level > 1)
+				return getWidth(t->left, level - 1) + getWidth(t->right, level - 1);
+		}
+		return 0;
+	}
+
+
+
+
+
+
 	void maxLvl()
 	{
 
