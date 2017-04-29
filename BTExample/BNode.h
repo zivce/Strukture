@@ -6,6 +6,7 @@ class BNode
 {
 public:
 	int info;
+	
 	BNode* left;
 	BNode* right;
 

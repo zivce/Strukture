@@ -5,6 +5,8 @@ using namespace std;
 void main()
 {
 	try {
+
+
 		BTree T;
 		T.insert(2);
 		T.insert(10);
@@ -16,7 +18,15 @@ void main()
 		T.insert(1);
 		T.insert(5);
 
+		cout << T.deepestNode();
 
+		cout << T.getMaxSumLvl();
+
+
+		T.leastCommonOuter(1, 4);
+		T.getMaxWidth();
+
+		T.countDiffTree();
 
 		BTree M;
 		M.insert(2);
