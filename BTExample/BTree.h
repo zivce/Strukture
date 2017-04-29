@@ -169,8 +169,41 @@ int deepestNode()
 
 	}
 
+int getMaxSumLvl()
+{
+	int maxSum = this->root->info;
+	int s = 0;
+	int h = this->heightTree();
+	for (int i = 1; i <= h; i++)
+	{
+		s = maxSumLvl(this->root, i);
 
-	int getMaxWidth()
+		if (s > maxSum)
+			maxSum = s;
+
+	}
+	return maxSum;
+}
+
+
+int maxSumLvl(BNode* t, int lvl)
+{
+	if (t != nullptr)
+	{
+		if (lvl == 1)
+		{
+			return t->info;
+		}
+		else if (lvl > 1)
+			return maxSumLvl(t->left, lvl - 1) + maxSumLvl(t->right, lvl - 1);
+
+	}
+	return 0;
+}
+
+
+
+int getMaxWidth()
 	{
 		int maxWidth = 0;
 		int width;
