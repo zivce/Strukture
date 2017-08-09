@@ -1,0 +1,17 @@
+﻿Build started 6/13/2017 1:03:38 AM.
+     1>Project "C:\Users\zivko\Documents\Visual Studio 2015\Projects\GraphAsList\GraphAsList\GraphAsList.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt GList.cpp
+         GList.cpp
+     1>c:\users\zivko\documents\visual studio 2015\projects\graphaslist\graphaslist\elements.h(39): warning C4150: deletion of pointer to incomplete type 'Edge'; no destructor called
+         c:\users\zivko\documents\visual studio 2015\projects\graphaslist\graphaslist\elements.h(5): note: see declaration of 'Edge'
+     1>c:\users\zivko\documents\visual studio 2015\projects\graphaslist\graphaslist\glist.cpp(652): warning C4715: 'GList::thruAdjNodesTilBackEdge': not all control paths return a value
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\zivko\Documents\Visual Studio 2015\Projects\GraphAsList\Debug\GraphAsList.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\zivko\Documents\Visual Studio 2015\Projects\GraphAsList\Debug\GraphAsList.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\zivko\Documents\Visual Studio 2015\Projects\GraphAsList\Debug\GraphAsList.lib" /MACHINE:X86 Debug\GList.obj
+         Debug\Source.obj
+         GraphAsList.vcxproj -> C:\Users\zivko\Documents\Visual Studio 2015\Projects\GraphAsList\Debug\GraphAsList.exe
+     1>Done Building Project "C:\Users\zivko\Documents\Visual Studio 2015\Projects\GraphAsList\GraphAsList\GraphAsList.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.97
